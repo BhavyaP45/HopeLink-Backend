@@ -13,9 +13,7 @@ db = SQLAlchemy(app)
 
 class Location(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    date_created = db.Column(db.DateTime, default = datetime.utcnow)
-    latitude = db.Column(db.Float, nullable = False)
-    longitude = db.Column(db.Float, nullable = False)
+    date = db.Column(db.DateTime, default = datetime.utcnow)
     title = db.Column(db.String(200), nullable = False)
     description = db.Column(db.String(400), nullable = False)
     name = db.Column(db.String(100), nullable = False)
@@ -37,18 +35,15 @@ def index():
         name = request.form['name']
 
         new_post = Location(title = title, description = content, name = name)
-        try:
-            db.session.add(new_post)
-            db.session.commit()
-            
-            return redirect("/")
+    
+        db.session.add(new_post)
+        db.session.commit()
+        return redirect("/")
 
-        except:
-            return 'There was a problem'
         
     else:
-        locations = Location.query.order_by(Location.date_created).all()
-        return render_template('index.html', locations = locations )
+        locations = Location.query.order_by(Location.date).all()
+        return render_template('index.html', locations = locations)
 
 if __name__ == "__main__":
     app.run(debug=True)
