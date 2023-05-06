@@ -1,0 +1,28 @@
+<!--Extends from the base html-->
+{% extends 'base.html'%}
+
+{% block head %} {% endblock %}
+
+{% block body %} 
+
+<div class = "form">
+    <form action ="/" method = "POST">
+        <input type = "text" name = "title" id = "title" >
+        <input type = "text" name = "content" id = "content" >
+        <input type = "name" name = "name" id = 'name'>
+        <input type = "submit" value = "Add Description">
+    </form>
+</div>
+
+{% for location in locations %}
+<div>
+    <h1>{{location.title}}</h1> 
+    <h2>{{location.name}}</h2>
+    <h3>{{location.time}}</h3>
+    <p>{{location.description}}</p>
+    
+</div>
+{% endfor %}
+
+
+{% endblock %}
